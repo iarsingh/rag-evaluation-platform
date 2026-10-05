@@ -1,8 +1,10 @@
+from rageval.ops import router as ops_router
 from fastapi import FastAPI, HTTPException
 
 from rageval.score import METRICS, EvalError, evaluate, evaluate_batch, gate
 
 app = FastAPI()
+app.include_router(ops_router, prefix="/v1")
 
 
 def guarded(call, *args):

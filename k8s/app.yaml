@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag-evaluation-platform
+  labels:
+    app: rag-evaluation-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rag-evaluation-platform
+  template:
+    metadata:
+      labels:
+        app: rag-evaluation-platform
+    spec:
+      containers:
+        - name: api
+          image: rag-evaluation-platform:local
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /v1/readyz
+              port: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rag-evaluation-platform
+spec:
+  selector:
+    app: rag-evaluation-platform
+  ports:
+    - port: 80
+      targetPort: 8080

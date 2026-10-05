@@ -79,3 +79,7 @@ curl -s -X POST localhost:8000/gate -H 'content-type: application/json' -d '{
   "tolerance": 0.05
 }'
 ```
+
+## Ops plane
+
+Workspaces, tenant isolation, job approval, and audit live under `/v1`. Production apply is refused. See `docs/ARCHITECTURE.md`.
