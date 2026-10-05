@@ -1,5 +1,44 @@
 # RAG Evaluation Platform
 
+<!-- project-guide:start -->
+## Project guide
+
+[Project architecture](PROJECT_ARCHITECTURE.md) · [Interview questions and answers](INTERVIEW_QA.md)
+
+Use the architecture document for the component diagram, implementation boundaries, and verification entry points. The interview guide includes source-backed answers and project walkthroughs.
+
+### Implementation map
+
+| Component | Responsibility |
+| --- | --- |
+| [`src/rageval/main.py`](src/rageval/main.py) | HTTP handlers: `GET /healthz`, `GET /metrics`, `POST /evaluate`, `POST /evaluate/batch`, `POST /gate` |
+| [`src/rageval/score.py`](src/rageval/score.py) | Functions: `stem`, `words`, `ratio`, `context_precision`, `check_citations`, `evaluate`, `evaluate_batch` |
+| [`requirements.txt`](requirements.txt) | Implementation or supporting configuration |
+| [`src/rageval/__init__.py`](src/rageval/__init__.py) | Implementation or supporting configuration |
+| [`tests/test_eval.py`](tests/test_eval.py) | Executable checks and regression examples |
+| [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | GitHub Actions job definitions |
+| [`README.md`](README.md) | Project explanations or operating notes |
+
+### Local setup and verification
+
+From the repository root (the commands follow the checked-in manifests):
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m pytest -q
+```
+
+To serve the FastAPI application locally, install the server separately if it is not already available:
+
+```bash
+python -m pip install uvicorn
+PYTHONPATH=src python -m uvicorn rageval.main:app --reload
+```
+
+<!-- project-guide:end -->
+
 Level: 7 — Intermediate RAG
 
 Skills: Python, RAG metrics, citation checks, batch evaluation, a regression gate for CI
