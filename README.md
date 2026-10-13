@@ -1,5 +1,12 @@
 # RAG Evaluation Platform
 
+## Overview
+
+A deterministic evaluator for RAG answers that scores an answer against its retrieved contexts and a gold answer using word overlap, so a score never changes between runs. It reports faithfulness, correctness, context precision and context recall, and checks `[n]` citation markers that point past the last context or share too few words with the answer. Batches of up to 500 cases return mean metrics and a pass rate, and a `/gate` endpoint fails when any metric drops more than a tolerance below a stored baseline, which can block a CI merge.
+
+- **Built with:** Python, uvicorn, pytest, GitHub Actions
+- **Scope:** Local evaluation service with no model calls; production apply is refused.
+
 <!-- project-guide:start -->
 ## Project guide
 
